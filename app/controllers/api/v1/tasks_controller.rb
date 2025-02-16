@@ -1,6 +1,7 @@
 class Api::V1::TasksController < ApplicationController
   def index
-    render json: Task.all 
+    tasks = Task.all
+    render json: TaskSerializer.format_tasks(tasks) 
   end
 
   def show
@@ -15,6 +16,9 @@ class Api::V1::TasksController < ApplicationController
     render json: Task.update(params[:id], task_params)
   end
 
+  def destroy
+    render json: Task.destroy(params[:id])
+  end
   private
 
   def task_params
